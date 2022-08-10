@@ -6,14 +6,24 @@
 ; Some utility functions that you may find useful to implement
 
 (define (zip pairs)
-  'replace-this-line)
+  (list (map car pairs) (map cadr pairs))
+)
+
+(define (push-back lst ele)
+  (append lst (list ele))
+)
 
 
 ;; Problem 15
 ;; Returns a list of two-element lists
 (define (enumerate s)
   ; BEGIN PROBLEM 15
-  'replace-this-line
+  (define (enum-helper lst idx)
+    (if (null? lst) nil
+      (cons (list idx (car lst)) (enum-helper (cdr lst) (+ idx 1)))
+    )
+  )
+  (enum-helper s 0)
   )
   ; END PROBLEM 15
 
@@ -23,7 +33,13 @@
 ;; the merged lists.
 (define (merge comp list1 list2)
   ; BEGIN PROBLEM 16
-  'replace-this-line
+  (cond
+    ((and (null? list1) (null? list2)) nil)
+    ((null? list2) (cons (car list1) (merge comp (cdr list1) list2)))
+    ((null? list1) (cons (car list2) (merge comp list1 (cdr list2))))
+    ((comp (car list1) (car list2)) (cons (car list1) (merge comp (cdr list1) list2)))
+    (else (cons (car list2) (merge comp list1 (cdr list2))))
+  )
   )
   ; END PROBLEM 16
 
@@ -37,7 +53,16 @@
 
 (define (nondecreaselist s)
     ; BEGIN PROBLEM 17
-    'replace-this-line
+    (define (nd-helper lst tmp res last)
+      (cond
+        ((and (null? lst) (null? tmp)) res)
+        ((null? lst) (push-back res tmp))
+        ((null? tmp) (nd-helper (cdr lst) (push-back tmp (car lst)) res (car lst)))
+        ((< (car lst) last) (nd-helper lst nil (push-back res tmp) last))
+        (else (nd-helper (cdr lst) (push-back tmp (car lst)) res (car lst)))
+      )
+    )
+    (nd-helper s nil nil 0)
     )
     ; END PROBLEM 17
 
@@ -55,12 +80,12 @@
 (define (let-to-lambda expr)
   (cond ((atom? expr)
          ; BEGIN PROBLEM EC
-         'replace-this-line
+         expr
          ; END PROBLEM EC
          )
         ((quoted? expr)
          ; BEGIN PROBLEM EC
-         'replace-this-line
+         expr
          ; END PROBLEM EC
          )
         ((or (lambda? expr)
@@ -69,19 +94,22 @@
                (params (cadr expr))
                (body   (cddr expr)))
            ; BEGIN PROBLEM EC
-           'replace-this-line
+           (cons form (cons (map let-to-lambda params) (map let-to-lambda body)))
            ; END PROBLEM EC
            ))
         ((let? expr)
          (let ((values (cadr expr))
                (body   (cddr expr)))
            ; BEGIN PROBLEM EC
-           'replace-this-line
+           (cons
+            (cons 'lambda (cons (car (zip (let-to-lambda values))) (let-to-lambda body))) 
+            (cadr (zip (let-to-lambda values)))
+            )
            ; END PROBLEM EC
            ))
         (else
          ; BEGIN PROBLEM EC
-         'replace-this-line
+         (map let-to-lambda expr)
          ; END PROBLEM EC
          )))
 

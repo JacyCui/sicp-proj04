@@ -41,7 +41,7 @@ This project includes several files, but all of your changes will be made to onl
 - `scheme_tokens.py`: implements the tokenizer for Scheme input
 - `scheme_builtins.py`: implements built-in Scheme procedures in Python
 - `buffer.py`: implements the `Buffer` class, used in `scheme_reader.py`
-- `ucb.py`: utility functions for use in 61A projects
+- `ucb.py`: utility functions for use in SICP projects
 - `questions.scm`: contains skeleton code for Phase III
 - `tests.scm`: a collection of test cases written in Scheme
 - `ok`: the autograder
@@ -480,7 +480,7 @@ You should now be able to give names to values and evaluate the resulting symbol
 ```scheme
 scm> (eval (define tau 6.28))
 6.28
-scm> (eval 'tau)
+scm> (eval tau)
 6.28
 scm> tau
 6.28
@@ -890,7 +890,7 @@ You may find the following functions and methods useful:
 
 - `validate_form`: this function can be used to validate the structure of each binding. It takes in a list `expr` of expressions and a `min` and `max` length. If `expr` is not a proper list or does not have between `min` and `max` items inclusive, it raises an error. If no `max` is passed in, the default is infinity.
 - `validate_formals`: this function validates that formal parameters are a Scheme list of symbols for which each symbol is distinct.
-- `make_child_frame`: this method of the `Frame` class (which you implemented in [Problem 11](https://inst.eecs.berkeley.edu/~cs61a/fa20/proj/scheme/#problem-11)) takes a `Pair` of formal parameters (symbols) and a `Pair` of values, and returns a new frame with all the symbols bound to the corresponding values.
+- `make_child_frame`: this method of the `Frame` class (which you implemented in Problem 11) takes a `Pair` of formal parameters (symbols) and a `Pair` of values, and returns a new frame with all the symbols bound to the corresponding values.
 
 Before writing any code, test your understanding of the problem:
 
